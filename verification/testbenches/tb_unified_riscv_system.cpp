@@ -7,13 +7,13 @@
 #include <chrono>
 #include <cstdint>
 #include <iomanip>
-#include "Vunified_riscv_system.h"
+#include "Vunified_riscv_simple.h"
 #include "verilated.h"
 #include "verilated_vcd_c.h"
 
 class UnifiedRISCVTestbench {
 private:
-    Vunified_riscv_system* dut;
+    Vunified_riscv_simple* dut;
     VerilatedVcdC* trace;
     uint64_t sim_time;
     
@@ -27,7 +27,7 @@ private:
     
 public:
     UnifiedRISCVTestbench() : sim_time(0), tests_passed(0), tests_failed(0) {
-        dut = new Vunified_riscv_system;
+        dut = new Vunified_riscv_simple;
         memory.resize(MEMORY_SIZE, 0);
         
         // Initialize trace
@@ -98,27 +98,25 @@ public:
                         // Write operation - store 512-bit data
                         for (int i = 0; i < 64; i++) { // 512 bits = 64 bytes
                             if (addr + i < MEMORY_SIZE) {
-                                memory[addr + i] = (dut->mem_wdata >> (i * 8)) & 0xFF;
+                                // Extract byte i from the 512-bit word
+                                int word_idx = i / 4; // Which 32-bit word
+                                int byte_idx = i % 4;  // Which byte in that word
+                                memory[addr + i] = (dut->mem_wdata[word_idx] >> (byte_idx * 8)) & 0xFF;
                             }
                         }
-                        std::cout << "MEM WRITE: addr=0x" << std::hex << addr 
-                                  << " data=0x" << dut->mem_wdata << std::dec << std::endl;
+                        std::cout << "MEM WRITE: addr=0x" << std::hex << addr << std::dec << std::endl;
                     } else {
                         // Read operation - load 512-bit data
-                        uint64_t data = 0;
-                        for (int i = 0; i < 8; i++) { // Load 64 bits at a time
-                            uint64_t byte_data = 0;
-                            for (int j = 0; j < 8; j++) {
-                                if (addr + i*8 + j < MEMORY_SIZE) {
-                                    byte_data |= (uint64_t)memory[addr + i*8 + j] << (j * 8);
+                        for (int i = 0; i < 16; i++) { // 16 32-bit words = 512 bits
+                            uint32_t word_data = 0;
+                            for (int j = 0; j < 4; j++) { // 4 bytes per word
+                                if (addr + i*4 + j < MEMORY_SIZE) {
+                                    word_data |= (uint32_t)memory[addr + i*4 + j] << (j * 8);
                                 }
                             }
-                            // Set the appropriate part of mem_rdata
-                            // Note: This is simplified - real implementation would need proper 512-bit handling
+                            dut->mem_rdata[i] = word_data;
                         }
-                        dut->mem_rdata = data; // Simplified to 64-bit for demonstration
-                        std::cout << "MEM READ: addr=0x" << std::hex << addr 
-                                  << " data=0x" << data << std::dec << std::endl;
+                        std::cout << "MEM READ: addr=0x" << std::hex << addr << std::dec << std::endl;
                     }
                 }
             }

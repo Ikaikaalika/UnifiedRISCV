@@ -178,10 +178,10 @@ module unified_memory_controller #(
                         if (cache_dirty[cache_set][victim_way] && 
                             cache_valid[cache_set][victim_way]) begin
                             // Need to writeback dirty line first
-                            next_state <= CACHE_WRITEBACK;
+                            // Will be handled in next state logic
                         end else begin
                             // Can directly fetch new line
-                            next_state <= CACHE_FILL;
+                            // Will be handled in next state logic
                         end
                     end
                 end
@@ -195,7 +195,6 @@ module unified_memory_controller #(
                     end else if (mem_ack) begin
                         mem_req <= 1'b0;
                         cache_dirty[cache_set][victim_way] <= 1'b0;
-                        next_state <= CACHE_FILL;
                     end
                 end
                 
@@ -245,8 +244,15 @@ module unified_memory_controller #(
                 else if (cpu_req) next_state = CPU_ACCESS;
             end
             GPU_ACCESS, CPU_ACCESS: begin
-                if (cache_hit || (current_state == CACHE_FILL && mem_ack)) begin
+                if (cache_hit) begin
                     next_state = IDLE;
+                end else begin
+                    // Cache miss - determine next action
+                    if (cache_dirty[cache_set][victim_way] && cache_valid[cache_set][victim_way]) begin
+                        next_state = CACHE_WRITEBACK;
+                    end else begin
+                        next_state = CACHE_FILL;
+                    end
                 end
             end
             CACHE_WRITEBACK: begin

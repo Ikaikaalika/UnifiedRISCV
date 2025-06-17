@@ -3,7 +3,7 @@
 
 # Project configuration
 PROJECT_NAME = unified_riscv_system
-TOP_MODULE = unified_riscv_system
+TOP_MODULE = unified_riscv_simple
 RTL_DIR = rtl
 TB_DIR = verification/testbenches
 SCRIPTS_DIR = scripts
@@ -23,10 +23,9 @@ RTL_SOURCES = $(RTL_DIR)/$(TOP_MODULE).sv \
               $(RTL_DIR)/cpu/riscv_cpu.sv \
               $(RTL_DIR)/gpu/gpu_compute_array.sv \
               $(RTL_DIR)/gpu/gpu_compute_unit.sv \
-              $(RTL_DIR)/memory/unified_memory_controller.sv \
-              $(RTL_DIR)/memory/cache_hierarchy.sv
+              $(RTL_DIR)/memory/unified_memory_controller.sv
 
-TB_SOURCES = $(TB_DIR)/tb_$(TOP_MODULE).cpp
+TB_SOURCES = $(TB_DIR)/tb_unified_riscv_system.cpp
 
 # Synthesis tools (for FPGA implementation)
 VIVADO = vivado
@@ -70,7 +69,7 @@ $(BUILD_DIR)/V$(TOP_MODULE): $(RTL_SOURCES) $(TB_SOURCES)
 	@echo "Compiling with Verilator..."
 	@mkdir -p $(BUILD_DIR)
 	cd $(BUILD_DIR) && $(VERILATOR) $(VERILATOR_FLAGS) \
-		-I../$(RTL_DIR) -I../$(RTL_DIR)/cpu -I../$(RTL_DIR)/gpu -I../$(RTL_DIR)/memory \
+		-I../$(RTL_DIR) -I../$(RTL_DIR)/cpu -I../$(RTL_DIR)/gpu -I../$(RTL_DIR)/memory -I../$(RTL_DIR)/interconnect \
 		--top-module $(TOP_MODULE) \
 		$(addprefix ../,$(RTL_SOURCES)) $(addprefix ../,$(TB_SOURCES))
 
@@ -78,7 +77,7 @@ $(BUILD_DIR)/V$(TOP_MODULE): $(RTL_SOURCES) $(TB_SOURCES)
 .PHONY: sim
 sim: $(BUILD_DIR)/V$(TOP_MODULE)
 	@echo "Running simulation..."
-	cd $(BUILD_DIR) && ./V$(TOP_MODULE) +trace
+	cd $(BUILD_DIR)/obj_dir && ./V$(TOP_MODULE) +trace
 
 # View waveforms
 .PHONY: waves
