@@ -1,0 +1,319 @@
+# UnifiedRISCV .gitignore
+# Comprehensive ignore file for RISC-V CPU/GPU development on macOS
+
+# ==============================================================================
+# Build and Simulation Output
+# ==============================================================================
+
+# Verilator build artifacts
+build/
+obj_dir/
+*.o
+*.a
+*.d
+*.mk
+*.cpp.d
+*.h.d
+
+# Simulation executables
+V*
+!V*.sv
+!V*.v
+
+# Waveform files (can be very large)
+waves/
+*.vcd
+*.vcd.gz
+*.fst
+*.fst.gz
+*.saif
+*.ghw
+
+# Simulation logs and dumps
+*.log
+*.dump
+*.trace
+*.out
+
+# ==============================================================================
+# Development Environment
+# ==============================================================================
+
+# Python virtual environment
+venv/
+env/
+.env
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python packaging
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.nox/
+
+# ==============================================================================
+# IDE and Editor Files
+# ==============================================================================
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# JetBrains IDEs
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ==============================================================================
+# macOS Specific
+# ==============================================================================
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# macOS Finder
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# macOS Thumbnails
+.thumbnails
+
+# ==============================================================================
+# Hardware Design Tools
+# ==============================================================================
+
+# Vivado (Xilinx)
+*.jou
+*.str
+*.xpr
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+*.srcs/
+vivado*.backup.log
+vivado_*.backup.jou
+.Xil/
+*_stub.v
+*_stub.vhdl
+*_funcsim.v
+*_funcsim.vhdl
+*_clocks.xdc
+*_ooc.xdc
+
+# Quartus (Intel/Altera)
+*.qpf
+*.qsf
+*.qws
+*.rpt
+*.summary
+*.pin
+*.pof
+*.sof
+*.jdi
+*.qarlog
+*.qar
+db/
+incremental_db/
+output_files/
+simulation/
+timing/
+greybox_tmp/
+
+# ModelSim/QuestaSim
+*.mpf
+*.wlf
+work/
+transcript
+vsim.wlf
+wlf*
+
+# Synopsys
+*.pvl
+*.syn
+*.mr
+*.log
+default.svf
+
+# ==============================================================================
+# Software Development
+# ==============================================================================
+
+# GCC/Clang artifacts
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.elf
+*.map
+*.lst
+*.bin
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Make
+*.make
+Makefile.deps
+
+# RISC-V toolchain artifacts
+*.s
+*.S
+!software/kernels/*.s
+!software/kernels/*.S
+*.dis
+*.disasm
+
+# ==============================================================================
+# Documentation and Reports
+# ==============================================================================
+
+# LaTeX
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+
+# Generated documentation
+docs/_build/
+docs/build/
+site/
+
+# Benchmark results (keep structure, not data)
+benchmark_results/
+!benchmark_results/.gitkeep
+performance_data/
+!performance_data/.gitkeep
+
+# ==============================================================================
+# Temporary and Cache Files
+# ==============================================================================
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.#*
+
+# Cache directories
+.cache/
+*.cache
+
+# Lock files
+*.lock
+package-lock.json
+yarn.lock
+
+# ==============================================================================
+# Security and Sensitive Data
+# ==============================================================================
+
+# Environment variables and secrets
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+secrets.txt
+*.key
+*.pem
+*.p12
+*.pfx
+
+# ==============================================================================
+# Project Specific
+# ==============================================================================
+
+# Large test data files
+test_data/large/
+*.dat
+*.mem
+
+# Generated HDL from high-level synthesis
+*.prj
+*.tcl.backup
+
+# Licensing and IP core files
+license.dat
+*.lic
+
+# Compressed archives (unless specifically needed)
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# ==============================================================================
+# Keep Important Empty Directories
+# ==============================================================================
+
+# Keep important directory structure
+!build/.gitkeep
+!waves/.gitkeep
+!docs/generated/.gitkeep
+!software/examples/.gitkeep
