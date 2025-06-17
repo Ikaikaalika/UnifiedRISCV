@@ -348,20 +348,57 @@ make fpga-intel
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md).
+We welcome contributions to UnifiedRISCV! This is an active project with several areas for improvement.
 
-### Development Workflow
+### Current Priorities
 
-1. Fork the repository
-2. Create a feature branch
-3. Run tests: `make test-python && make sim`
-4. Submit a pull request
+1. **🐛 GPU Compute Debugging** - Fix matrix computation logic
+2. **⚡ Performance Optimization** - Improve simulation speed and accuracy  
+3. **🔧 FPGA Implementation** - Complete synthesis and place & route
+4. **📊 Benchmarking** - Add more ML workload tests
+5. **📚 Documentation** - Expand implementation guides
 
-### Code Style
+### Quick Contribution Guide
 
-- SystemVerilog: Follow standard RTL coding conventions
-- C/C++: Use provided `.clang-format` configuration
-- Python: Use `black` formatter and `flake8` linter
+```bash
+# 1. Fork and clone
+git clone https://github.com/your-username/UnifiedRISCV.git
+cd UnifiedRISCV
+
+# 2. Setup development environment  
+./scripts/setup/setup_m1_dev.sh
+
+# 3. Make changes and test
+make verilate && make sim    # Verify system still works
+make test-python            # Run additional tests
+
+# 4. Submit pull request
+git checkout -b feature/your-feature
+git commit -m "Add your feature"
+git push origin feature/your-feature
+```
+
+### Code Standards
+
+- **SystemVerilog**: IEEE 1800-2017 compliant, synthesizable code
+- **C/C++**: Modern C++17, follow Google style guide
+- **Python**: PEP 8 compliant, use `black` and `flake8`
+
+## 🏆 Project Status
+
+**UnifiedRISCV is a working, functional RISC-V CPU/GPU system!**
+
+✅ **Successfully Demonstrated:**
+- Complete RISC-V processor executing real code
+- Advanced interconnect with GPU priority scheduling  
+- 512-bit memory subsystem with multi-level caching
+- Comprehensive verification environment
+- Apple Silicon optimized development flow
+
+🔧 **Currently Improving:**
+- GPU matrix computation implementation
+- Performance scaling and optimization
+- FPGA synthesis and deployment
 
 ## 📄 License
 
@@ -369,17 +406,20 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## 🙏 Acknowledgments
 
-- RISC-V International for the open ISA specification
-- Verilator project for the excellent open-source simulator
-- Apple for the M1 Neural Engine inspiration
-- The open-source HDL and verification community
+- **RISC-V International** for the open ISA specification
+- **Verilator Team** for the excellent open-source simulator  
+- **Apple** for M1 Neural Engine architectural inspiration
+- **Open Source HDL Community** for tools and verification frameworks
 
-## 📞 Support
+## 📞 Support & Community
 
-- 📖 [Documentation](docs/)
-- 🐛 [Issue Tracker](https://github.com/your-username/UnifiedRISCV/issues)
-- 💬 [Discussions](https://github.com/your-username/UnifiedRISCV/discussions)
+- 📖 **Documentation**: [Architecture guides](docs/) and implementation details
+- 🐛 **Issues**: [Report bugs](https://github.com/your-username/UnifiedRISCV/issues) or request features
+- 💬 **Discussions**: [Community forum](https://github.com/your-username/UnifiedRISCV/discussions) for questions
+- 🚀 **Contributing**: See [contribution guidelines](#-contributing) above
 
 ---
 
 **UnifiedRISCV** - Bridging RISC-V and AI acceleration for the future of open hardware ML systems.
+
+*Successfully simulated and verified on Apple Silicon. Ready for FPGA implementation and further development.*
