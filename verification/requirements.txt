@@ -1,0 +1,48 @@
+# Python requirements for UnifiedRISCV verification
+# Optimized for M1 Mac development
+
+# Core testing framework
+pytest>=7.0.0
+pytest-html>=3.1.0
+pytest-cov>=4.0.0
+
+# HDL simulation and verification
+cocotb>=1.8.0
+cocotb-test>=0.2.4
+
+# Numerical computing (M1 optimized)
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Visualization and analysis
+matplotlib>=3.6.0
+seaborn>=0.12.0
+plotly>=5.13.0
+
+# Performance analysis
+psutil>=5.9.0
+pandas>=1.5.0
+
+# Neural network reference implementations
+torch>=2.0.0  # M1 optimized version
+torchvision>=0.15.0
+
+# Hardware description utilities
+pyrtl>=0.11.0
+nmigen>=0.4.0  # Alternative HDL framework
+
+# Documentation and reporting
+sphinx>=5.0.0
+sphinx-rtd-theme>=1.2.0
+jupyterlab>=3.6.0
+
+# Development utilities
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0
+
+# M1 Mac specific optimizations
+# These versions are known to work well with Apple Silicon
+accelerate>=0.16.0  # Hugging Face accelerate for M1
+tensorflow-macos>=2.11.0; sys_platform == "darwin" and platform_machine == "arm64"
+tensorflow-metal>=0.7.0; sys_platform == "darwin" and platform_machine == "arm64"
